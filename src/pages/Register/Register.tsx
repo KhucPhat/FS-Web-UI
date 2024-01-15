@@ -50,12 +50,9 @@ function Copyright(props: any): JSX.Element {
 const useStyles = makeStyles((theme: any) =>
   createStyles({
     box: {
-      marginTop: 40,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: 4,
-      boxShadow: '3px 3px 3px rgba(0, 0, 0, 0.1)', // Example boxShadow value
       borderRadius: 1,
       width: '30%',
       height: '100%',
@@ -128,30 +125,11 @@ function Register() {
   return (
     <Box
       className={classes.box}
-      // sx={{
-      //   marginTop: 4,
-      //   display: 'flex',
-      //   flexDirection: 'column',
-      //   alignItems: 'center',
-      //   padding: 4,
-      //   boxShadow: '3', // Correcting the boxShadow value
-      //   borderRadius: 1,
-      //   width: '30%',
-      //   height: '100%',
-      //   marginInline: 'auto',
-      //   [theme.breakpoints.down('lg')]: {
-      //     width: '65%',
-      //     marginTop: 40,
-      //   },
-      //   [theme.breakpoints.down('md')]: {
-      //     width: '65%',
-      //     marginTop: 25,
-      //   },
-      //   [theme.breakpoints.down('sm')]: {
-      //     width: '85%',
-      //     marginTop: 5,
-      //   },
-      // }}
+      sx={{
+        boxShadow: '3',
+        padding: 4,
+        marginTop: 4,
+      }}
     >
       <Avatar sx={{ m: 0, bgcolor: 'secondary.main' }}>
         <LockOutlinedIcon />
@@ -185,21 +163,24 @@ function Register() {
             />
           </Grid>
           <Grid item xs={12} sm={7} style={{ marginTop: '-8px' }}>
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs} > 
-                  <DemoContainer components={['DatePicker']}>
-                    <DatePicker
-                      format="DD/MM/YYYY"
-                      label="Birth Day"
-                      onChange={(date: any) => formik.setFieldValue('birthDay', date.toDate())}
-                      onBlur={() => formik.setFieldTouched('birthDay', true)}
-                      variant="outlined"
-                      error={Boolean(formik.touched.birthDay && formik.errors.birthDay)}
-                      helperText={formik.touched.birthDay && formik.errors.birthDay}
-                      value={formik.values.birthDay}
-                     
-                    />
-                  </DemoContainer>
-                </LocalizationProvider> */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DatePicker']}>
+                <DatePicker
+                  format="DD/MM/YYYY"
+                  label="Birth Day"
+                  onChange={(date: any) =>
+                    formik.setFieldValue('birthDay', date.toDate())
+                  }
+                  onBlur={() => formik.setFieldTouched('birthDay', true)}
+                  variant="outlined"
+                  error={Boolean(
+                    formik.touched.birthDay && formik.errors.birthDay
+                  )}
+                  helperText={formik.touched.birthDay && formik.errors.birthDay}
+                  value={formik.values.birthDay}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
           </Grid>
           <Grid item xs={12}>
             <TextField

@@ -140,5 +140,4 @@ export default function ForgotPassword(): JSX.Element {
       </Dialog>
     </Grid>
   );
-};
-
+}
