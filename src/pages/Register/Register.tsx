@@ -53,10 +53,14 @@ const useStyles = makeStyles((theme: any) =>
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      borderRadius: 1,
+      justifyContent: 'center',
+      borderRadius: '10px',
       width: '30%',
-      height: '100%',
+      height: '85%',
       marginInline: 'auto',
+      marginTop: '3%',
+      padding: '30px',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
       [theme.breakpoints.down('lg')]: {
         width: '65%',
         marginTop: 40,
@@ -69,6 +73,36 @@ const useStyles = makeStyles((theme: any) =>
         width: '85%',
         marginTop: 5,
       },
+    },
+    textField: {
+      marginTop: '5px',
+      width: '100%',
+      '& input': {
+        fontSize: '13px',
+      },
+    },
+    date: {
+      marginTop: '-8px',
+    },
+    formControl: {
+      width: '100%',
+    },
+    button: {
+      marginTop: '3%',
+      marginBottom: '3%',
+    },
+    copyRight: {
+      marginTop: '10px',
+    },
+    avatar: {
+      margin: 0,
+      backgroundColor: 'navy',
+    },
+    boxChild: {
+      marginTop: '16px',
+    },
+    link: {
+      fontSize: '16px',
     },
   })
 );
@@ -123,28 +157,21 @@ function Register() {
   });
 
   return (
-    <Box
-      className={classes.box}
-      sx={{
-        boxShadow: '3',
-        padding: 4,
-        marginTop: 4,
-      }}
-    >
-      <Avatar sx={{ m: 0, bgcolor: 'secondary.main' }}>
+    <Box className={classes.box}>
+      <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5" fontWeight="bold">
         Sign up
       </Typography>
       <Box
+        className={classes.boxChild}
         component="form"
         noValidate
         onSubmit={formik.handleSubmit}
-        sx={{ mt: 3 }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={5}>
+          <Grid item xs={12} sm={6}>
             <TextField
               autoComplete="given-name"
               name="username"
@@ -154,6 +181,7 @@ function Register() {
               inputProps={{
                 onFocus: () => false,
               }}
+              className={classes.textField}
               label="Username"
               value={formik.values.username}
               onChange={formik.handleChange('username')}
@@ -162,7 +190,7 @@ function Register() {
               helperText={formik.touched.username && formik.errors.username}
             />
           </Grid>
-          <Grid item xs={12} sm={7} style={{ marginTop: '-8px' }}>
+          <Grid item xs={12} sm={6} className={classes.date}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={['DatePicker']}>
                 <DatePicker
@@ -171,6 +199,7 @@ function Register() {
                   onChange={(date: any) =>
                     formik.setFieldValue('birthDay', date.toDate())
                   }
+                  className={classes.textField}
                   onBlur={() => formik.setFieldTouched('birthDay', true)}
                   variant="outlined"
                   error={Boolean(
@@ -184,6 +213,7 @@ function Register() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              className={classes.textField}
               required
               fullWidth
               id="email"
@@ -199,6 +229,7 @@ function Register() {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              className={classes.textField}
               required
               fullWidth
               name="password"
@@ -213,8 +244,9 @@ function Register() {
               helperText={formik.touched.password && formik.errors.password}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={8}>
             <MuiPhoneNumber
+              className={classes.textField}
               name="phoneNumber"
               label="Phone Number"
               value={formik.values.phoneNumber}
@@ -235,8 +267,8 @@ function Register() {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
+          <Grid item xs={12} sm={4}>
+            <FormControl className={classes.formControl} fullWidth>
               <InputLabel id="demo-simple-select-label">Gender</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -264,19 +296,19 @@ function Register() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          className={classes.button}
         >
           Sign Up
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="login" variant="body2">
+            <Link className={classes.link} href="login" variant="body2">
               Already have an account? Sign in
             </Link>
           </Grid>
         </Grid>
       </Box>
-      <Copyright sx={{ mt: 2 }} />
+      <Copyright className={classes.copyRight} />
     </Box>
   );
 }

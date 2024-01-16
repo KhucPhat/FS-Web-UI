@@ -17,12 +17,57 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useTheme } from '@mui/system';
+import { makeStyles, createStyles } from '@mui/styles';
 
-export default function ForgotPassword(): JSX.Element {
+const useStyles = makeStyles((theme: any) =>
+  createStyles({
+    grid: {
+      marginTop: '8%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+    },
+    box: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      borderRadius: '8px',
+      width: '30%',
+      height: '100%',
+      marginInline: 'auto',
+      marginTop: '10px',
+      padding: '16px',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+      [theme.breakpoints.down('lg')]: {
+        width: '65%',
+        marginTop: 40,
+      },
+      [theme.breakpoints.down('md')]: {
+        width: '65%',
+        marginTop: 25,
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: '85%',
+        marginTop: 10,
+      },
+    },
+    LockOutlinedIcon: { fontSize: 50, marginBottom: 2 },
+    button: {
+      marginTop: 20,
+    },
+    buttonBack: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      marginTop: 10,
+      color: 'navy',
+    },
+  })
+);
+function ForgotPassword() {
+  const classes = useStyles();
+
   const navigate = useNavigate();
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
-  const theme = useTheme();
 
   const formik = useFormik({
     initialValues: {
@@ -52,42 +97,9 @@ export default function ForgotPassword(): JSX.Element {
   };
 
   return (
-    <Grid
-      container
-      sx={{ marginTop: 15 }}
-      justifyContent="center"
-      alignItems="center"
-      height="100%"
-      width="100%"
-    >
-      <Box
-        component={Paper}
-        elevation={3}
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: 4,
-          boxShadow: 3,
-          borderRadius: 1,
-          width: '30%',
-          marginInline: 'auto',
-          [theme.breakpoints.down('lg')]: {
-            width: '65%',
-            marginTop: 40,
-          },
-          [theme.breakpoints.down('md')]: {
-            width: '65%',
-            marginTop: 25,
-          },
-          [theme.breakpoints.down('sm')]: {
-            width: '85%',
-            marginTop: 10,
-          },
-        }}
-      >
-        <LockOutlinedIcon sx={{ fontSize: 40, marginBottom: 2 }} />
+    <Grid container className={classes.grid}>
+      <Box component={Paper} elevation={3} className={classes.box}>
+        <LockOutlinedIcon className={classes.LockOutlinedIcon} />
         <Typography variant="h5">Forgot Password</Typography>
         <TextField
           margin="normal"
@@ -108,15 +120,14 @@ export default function ForgotPassword(): JSX.Element {
           variant="contained"
           color="primary"
           onClick={formik.handleSubmit}
-          sx={{ marginTop: 1 }}
+          className={classes.button}
         >
           Reset Password
         </Button>
         <Button
-          color="primary"
           startIcon={<ArrowBackIcon />}
           href="login"
-          sx={{ fontSize: 14, fontWeight: 'bold', marginTop: 2 }}
+          className={classes.buttonBack}
         >
           Back to Login
         </Button>
@@ -141,3 +152,4 @@ export default function ForgotPassword(): JSX.Element {
     </Grid>
   );
 }
+export default ForgotPassword;
