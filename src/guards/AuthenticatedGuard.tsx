@@ -1,15 +1,14 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 
-function AuthenticatedGuard(props) {
+function AuthenticatedGuard(props: any) {
   const { component: Component, ...rest } = props;
   return (
     <Route
       {...rest}
-      render={(props) => {
+      render={(props: any) => {
         if (!localStorage.getItem('token')) {
-          return <Redirect to="/login" />;
+          return <Navigate to="/login" />;
         }
         return <Component {...props} />;
       }}

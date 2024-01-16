@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import {
   Avatar,
@@ -142,7 +140,7 @@ function Register() {
         .max(20, 'Last name must be under 20 character')
         .required('Last name is required'),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values: any) => {
       // handle request api register
       // const res = await api.register({
       //   email: values.email,
