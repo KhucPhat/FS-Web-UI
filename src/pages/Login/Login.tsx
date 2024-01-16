@@ -14,9 +14,9 @@ import Typography from '@mui/material/Typography';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/system';
+import { makeStyles, createStyles } from '@mui/styles';
 
-function Copyright(props: any): JSX.Element {
+function Copyright(props: any) {
   return (
     <Typography
       variant="body2"
@@ -33,12 +33,54 @@ function Copyright(props: any): JSX.Element {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-export default function Login(): JSX.Element {
+const useStyles = makeStyles((theme: any) =>
+  createStyles({
+    box: {
+      marginTop: '7%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '30px',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+      borderRadius: '10px',
+      width: '30%',
+      marginInline: 'auto',
+      [theme.breakpoints.down('lg')]: {
+        width: '65%',
+        marginTop: 40,
+      },
+      [theme.breakpoints.down('md')]: {
+        width: '65%',
+        marginTop: 30,
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: '85%',
+        marginTop: 15,
+      },
+    },
+    avatar: {
+      margin: '10px',
+      backgroundColor: 'navy',
+    },
+    boxChild: {
+      marginTop: '10px',
+    },
+    button: {
+      marginTop: '20px',
+      marginBottom: '5%',
+    },
+    link: {
+      fontSize: '16px',
+    },
+    copyRight: {
+      marginBottom: '3%',
+      marginTop: '5%',
+    },
+  })
+);
+export default function Login() {
   const navigate = useNavigate();
-  const theme = useTheme();
-
+  const classes = useStyles();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -66,32 +108,8 @@ export default function Login(): JSX.Element {
   });
 
   return (
-    <Box
-      sx={{
-        marginTop: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: 4,
-        boxShadow: '3',
-        borderRadius: 1,
-        width: '25%',
-        marginInline: 'auto',
-        [theme.breakpoints.down('lg')]: {
-          width: '65%',
-          marginTop: 40,
-        },
-        [theme.breakpoints.down('md')]: {
-          width: '65%',
-          marginTop: 30,
-        },
-        [theme.breakpoints.down('sm')]: {
-          width: '85%',
-          marginTop: 15,
-        },
-      }}
-    >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+    <Box className={classes.box}>
+      <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
@@ -101,7 +119,7 @@ export default function Login(): JSX.Element {
         component="form"
         onSubmit={formik.handleSubmit}
         noValidate
-        sx={{ mt: 1 }}
+        className={classes.boxChild}
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -144,24 +162,28 @@ export default function Login(): JSX.Element {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          className={classes.button}
         >
           Sign In
         </Button>
         <Grid container direction="column">
           <Grid item xs>
-            <Link href="forgot-password" variant="body2">
+            <Link
+              className={classes.link}
+              href="forgot-password"
+              variant="body2"
+            >
               Forgot password?
             </Link>
           </Grid>
           <Grid item>
-            <Link href="register" variant="body2">
+            <Link className={classes.link} href="register" variant="body2">
               Don't have an account? Sign Up
             </Link>
           </Grid>
         </Grid>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Copyright className={classes.copyRight} />
     </Box>
   );
 }
