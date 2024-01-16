@@ -1,10 +1,9 @@
-/* eslint-disable import/extensions */
 import './App.css';
 import React, { Suspense, lazy } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   const LazyLoadingLogin = lazy(() => import('../pages/Login/Login.tsx'));
