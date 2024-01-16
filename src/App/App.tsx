@@ -7,15 +7,15 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-  const LazyLoadingLogin = lazy(() => import('./pages/Login/Login.tsx'));
+  const LazyLoadingLogin = lazy(() => import('../pages/Login/Login.tsx'));
   const LazyLoadingRegister = lazy(
-    () => import('./pages/Register/Register.tsx')
+    () => import('../pages/Register/Register.tsx')
   );
   const LazyLoadingNotFound = lazy(
-    () => import('./pages/NotFound/NotFound.tsx')
+    () => import('../pages/NotFound/NotFound.tsx')
   );
   const LazyLoadingFotgotPassword = lazy(
-    () => import('./pages/ForgotPassword/ForgotPassword.tsx')
+    () => import('../pages/ForgotPassword/ForgotPassword.tsx')
   );
   const theme = createTheme();
   return (
