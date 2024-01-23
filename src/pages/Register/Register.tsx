@@ -184,8 +184,10 @@ function Register() {
               value={formik.values.username}
               onChange={formik.handleChange('username')}
               onBlur={formik.handleBlur('username')}
-              error={formik.touched.username && formik.errors.username}
-              helperText={formik.touched.username && formik.errors.username}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={
+                formik.touched.username && Boolean(formik.errors.username)
+              }
             />
           </Grid>
           <Grid item xs={12} sm={6} className={classes.date}>
@@ -221,8 +223,8 @@ function Register() {
               value={formik.values.email}
               onChange={formik.handleChange('email')}
               onBlur={formik.handleBlur('email')}
-              error={formik.touched.email && formik.errors.email}
-              helperText={formik.touched.email && formik.errors.email}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && Boolean(formik.errors.email)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -238,8 +240,10 @@ function Register() {
               value={formik.values.password}
               onChange={formik.handleChange('password')}
               onBlur={formik.handleBlur('password')}
-              error={formik.touched.password && formik.errors.password}
-              helperText={formik.touched.password && formik.errors.password}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={
+                formik.touched.password && Boolean(formik.errors.password)
+              }
             />
           </Grid>
           <Grid item xs={12} sm={8}>
@@ -256,11 +260,10 @@ function Register() {
                 formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
               }
               helperText={
-                formik.touched.phoneNumber && formik.errors.phoneNumber
+                formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
               }
               defaultCountry="vn"
               onlyCountries={['vn']}
-              template="+84 (###) ###-####"
               countryCodeEditable={false}
               fullWidth
             />
@@ -274,7 +277,7 @@ function Register() {
                 value={formik.values.gender}
                 onChange={formik.handleChange('gender')}
                 onBlur={formik.handleBlur('gender')}
-                error={formik.touched.gender && formik.errors.gender}
+                error={formik.touched.gender && Boolean(formik.errors.gender)}
                 helperText={formik.touched.gender && formik.errors.gender}
                 label="Gender"
               >

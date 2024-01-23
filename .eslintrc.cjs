@@ -39,7 +39,13 @@ module.exports = {
     '@typescript-eslint/no-shadow': 0,
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 0,
+    'import/prefer-default-export': 0,
     'import/extensions': 0,
+    'react/display-name': 0,
+    'import/newline-after-import': 0,
+    'array-callback-return': 0,
+    'consistent-return': 0,
+    'react/no-array-index-key': 0,
     'prettier/prettier': [
       'error',
       {

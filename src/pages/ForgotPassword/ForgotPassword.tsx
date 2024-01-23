@@ -112,10 +112,9 @@ function ForgotPassword() {
           value={formik.values.email}
           onChange={formik.handleChange('email')}
           onBlur={formik.handleBlur('email')}
-          error={formik.touched.email && formik.errors.email}
-          helperText={formik.touched.email && formik.errors.email}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && Boolean(formik.errors.email)}
         />
-
         <Button
           margin="normal"
           variant="contained"

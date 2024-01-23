@@ -131,8 +131,8 @@ export default function Login() {
               value={formik.values.email}
               onChange={formik.handleChange('email')}
               onBlur={formik.handleBlur('email')}
-              error={formik.touched.email && formik.errors.email}
-              helperText={formik.touched.email && formik.errors.email}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && Boolean(formik.errors.email)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -147,8 +147,10 @@ export default function Login() {
               value={formik.values.password}
               onChange={formik.handleChange('password')}
               onBlur={formik.handleBlur('password')}
-              error={formik.touched.password && formik.errors.password}
-              helperText={formik.touched.password && formik.errors.password}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={
+                formik.touched.password && Boolean(formik.errors.password)
+              }
             />
           </Grid>
         </Grid>
