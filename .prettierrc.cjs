@@ -6,6 +6,20 @@ const config = {
     tabWidth: 2,
     semi: true,
     singleQuote: true,
+    "arrowParens": "avoid",
+    "printWidth": 80,
+    "useTabs": false,
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "embeddedLanguageFormatting": "auto",
+    "htmlWhitespaceSensitivity": "css",
+    "insertPragma": false,
+    "jsxSingleQuote": false,
+    "proseWrap": "preserve",
+    "quoteProps": "as-needed",
+    "requirePragma": false,
+    "singleAttributePerLine": false,
+    "vueIndentScriptAndStyle": false
 };
 
 module.exports = config;

@@ -13,175 +13,215 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles, createStyles } from '@mui/styles';
+import * as api from '../../apis/api';
+import { useSnackbar } from 'notistack';
 
 function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}.
-    </Typography>
-  );
+    return (
+        <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            {...props}
+        >
+            {'Copyright © '}
+            <Link color="inherit" href="#">
+                Your Website
+            </Link>{' '}
+            {new Date().getFullYear()}.
+        </Typography>
+    );
 }
 
 const useStyles = makeStyles((theme: any) =>
-  createStyles({
-    box: {
-      marginTop: '7%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '30px',
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
-      borderRadius: '10px',
-      width: '30%',
-      marginInline: 'auto',
-      [theme.breakpoints.down('lg')]: {
-        width: '65%',
-        marginTop: 40,
-      },
-      [theme.breakpoints.down('md')]: {
-        width: '65%',
-        marginTop: 30,
-      },
-      [theme.breakpoints.down('sm')]: {
-        width: '85%',
-        marginTop: 15,
-      },
-    },
-    avatar: {
-      margin: '10px',
-      backgroundColor: 'navy',
-    },
-    boxChild: {
-      marginTop: '10px',
-    },
-    button: {
-      marginTop: '20px',
-      marginBottom: '5%',
-    },
-    link: {
-      fontSize: '16px',
-    },
-    copyRight: {
-      marginBottom: '3%',
-      marginTop: '5%',
-    },
-  })
+    createStyles({
+        box: {
+            marginTop: '7%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            padding: '30px',
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+            borderRadius: '10px',
+            width: '85%',
+            marginInline: 'auto',
+            [theme.breakpoints.down('lg')]: {
+                // 1280px
+                width: '65%',
+                marginTop: 20,
+            },
+            [theme.breakpoints.down('md')]: {
+                // 960px
+                width: '65%',
+                marginTop: 30,
+            },
+            [theme.breakpoints.down('sm')]: {
+                // 600px
+                width: '85%',
+                marginTop: 0,
+            },
+        },
+        avatar: {
+            margin: '10px',
+            backgroundColor: 'navy',
+        },
+        boxChild: {
+            marginTop: '10px',
+        },
+        button: {
+            marginTop: '20px',
+            marginBottom: '5%',
+        },
+        link: {
+            fontSize: '16px',
+        },
+        copyRight: {
+            marginBottom: '3%',
+            marginTop: '5%',
+        },
+    })
 );
 export default function Login() {
-  const navigate = useNavigate();
-  const classes = useStyles();
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validationSchema: yup.object().shape({
-      email: yup.string().required('Email is required').email('Email invalid'),
-      password: yup
-        .string()
-        .min(6, 'Password must be at least 6 characters')
-        .required('Password is required'),
-    }),
-    onSubmit: async (values: any) => {
-      // handle request api register
-      // const res = await api.register({
-      //   email: values.email,
-      //   password: values.password,
-      //   lastName: values.lastName,
-      //   username: values.username,
-      //   confirmPassword: values.confirmPassword,
-      // });
+    const navigate = useNavigate();
+    const classes = useStyles();
+    const { enqueueSnackbar } = useSnackbar();
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: yup.object().shape({
+            email: yup
+                .string()
+                .required('Email is required')
+                .email('Email invalid'),
+            password: yup
+                .string()
+                .min(6, 'Password must be at least 6 characters')
+                .required('Password is required'),
+        }),
+        onSubmit: async (values: any) => {
+            const res = await api.login({
+                email: values.email,
+                password: values.password,
+            });
+            console.log(res);
 
-      navigate('/home');
-    },
-  });
+            if (res.status === 200) {
+                enqueueSnackbar(res.message, {
+                    variant: 'success',
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right',
+                    },
+                });
+                localStorage.setItem('access_token', res.data.accessToken);
+                navigate('/home');
+            } else {
+                enqueueSnackbar(res.message, {
+                    variant: 'error',
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right',
+                    },
+                });
+            }
+        },
+    });
 
-  return (
-    <Box className={classes.box}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
-      <Box
-        component="form"
-        onSubmit={formik.handleSubmit}
-        noValidate
-        className={classes.boxChild}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={formik.values.email}
-              onChange={formik.handleChange('email')}
-              onBlur={formik.handleBlur('email')}
-              error={formik.touched.email && formik.errors.email}
-              helperText={formik.touched.email && formik.errors.email}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              value={formik.values.password}
-              onChange={formik.handleChange('password')}
-              onBlur={formik.handleBlur('password')}
-              error={formik.touched.password && formik.errors.password}
-              helperText={formik.touched.password && formik.errors.password}
-            />
-          </Grid>
-        </Grid>
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className={classes.button}
-        >
-          Sign In
-        </Button>
-        <Grid container direction="column">
-          <Grid item xs>
-            <Link
-              className={classes.link}
-              href="forgot-password"
-              variant="body2"
+    return (
+        <Box className={classes.box}>
+            <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Sign in
+            </Typography>
+            <Box
+                component="form"
+                onSubmit={formik.handleSubmit}
+                noValidate
+                className={classes.boxChild}
             >
-              Forgot password?
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link className={classes.link} href="register" variant="body2">
-              Don't have an account? Sign Up
-            </Link>
-          </Grid>
-        </Grid>
-      </Box>
-      <Copyright className={classes.copyRight} />
-    </Box>
-  );
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange('email')}
+                            onBlur={formik.handleBlur('email')}
+                            error={
+                                formik.touched.email &&
+                                Boolean(formik.errors.email)
+                            }
+                            helperText={
+                                formik.touched.email &&
+                                Boolean(formik.errors.email)
+                            }
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="new-password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange('password')}
+                            onBlur={formik.handleBlur('password')}
+                            error={
+                                formik.touched.password &&
+                                Boolean(formik.errors.password)
+                            }
+                            helperText={
+                                formik.touched.password &&
+                                Boolean(formik.errors.password)
+                            }
+                        />
+                    </Grid>
+                </Grid>
+                <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                />
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    className={classes.button}
+                >
+                    Sign In
+                </Button>
+                <Grid container direction="column">
+                    <Grid item xs>
+                        <Link
+                            className={classes.link}
+                            href="forgot-password"
+                            variant="body2"
+                        >
+                            Forgot password?
+                        </Link>
+                    </Grid>
+                    <Grid item>
+                        <Link
+                            className={classes.link}
+                            href="register"
+                            variant="body2"
+                        >
+                            Don't have an account? Sign Up
+                        </Link>
+                    </Grid>
+                </Grid>
+            </Box>
+            <Copyright className={classes.copyRight} />
+        </Box>
+    );
 }
