@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Suspense, lazy } from 'react';
-cimport CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import routes from '../routes/routes.tsx';
